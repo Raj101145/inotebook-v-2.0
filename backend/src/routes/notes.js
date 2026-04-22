@@ -4,6 +4,7 @@ const { authRequired } = require('../middleware/auth');
 const {
   createNote,
   getMyNotes,
+  getNoteById,
   updateNote,
   deleteNote,
 } = require('../controllers/notesController');
@@ -18,6 +19,10 @@ router.post('/', (req, res, next) => {
 
 router.get('/', (req, res, next) => {
   Promise.resolve(getMyNotes(req, res)).catch(next);
+});
+
+router.get('/:id', (req, res, next) => {
+  Promise.resolve(getNoteById(req, res)).catch(next);
 });
 
 router.put('/:id', (req, res, next) => {

@@ -21,6 +21,15 @@ async function getMyNotes(req, res) {
   return res.json({ notes });
 }
 
+async function getNoteById(req, res) {
+  const { id } = req.params;
+
+  const note = await Note.findOne({ _id: id, user: req.user.id });
+  if (!note) return res.status(404).json({ message: 'note not found' });
+
+  return res.json({ note });
+}
+
 async function updateNote(req, res) {
   const { id } = req.params;
   const { title, description } = req.body || {};
@@ -52,5 +61,5 @@ async function deleteNote(req, res) {
   return res.json({ ok: true });
 }
 
-module.exports = { createNote, getMyNotes, updateNote, deleteNote };
+module.exports = { createNote, getMyNotes, getNoteById, updateNote, deleteNote };
 
